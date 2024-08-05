@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'avtoriz/css/login.css' %}">
+    <link rel="shortcut icon" href="{% static 'avtoriz/img/logo.png' %}" type="image/png">
+    <title>Подтверждение почты</title>
+</head>
+<body>
+<div class="activateEmail">
+<h2>Подтверждение адреса электронной почты</h2>
+<p>На Вашу электронную почту  {{ user.get_username }}  отправлено
+    письмо с уникальной ссылкой для его подтверждения</p>
+</div>
+</body>
+</html>

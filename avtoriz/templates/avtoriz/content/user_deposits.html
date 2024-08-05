@@ -1,0 +1,30 @@
+{% extends "avtoriz/content/base.html" %}
+{% block title %}Начисления{% endblock title %}
+
+{% block content %}
+<div id="content-deposits">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header" id="infoAgreementTrue">
+                    <div class="alert alert-danger" role="alert" id="infoAgreement"></div>
+                </div>
+                <div class="card-body" id="card-body-info">
+                    <table class="table table-hover" id="paymentTable">
+                        <thead class="text-white" style="background:linear-gradient(0deg, #002244,#3457D5);">
+                        <tr>
+                            <th>Дата начисления</th>
+                            <th>Наименование объекта</th>
+                            <th>Тариф</th>
+                            <th>Начислено кВт*ч</th>
+                            <th>Сумма (руб.)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="paymentBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

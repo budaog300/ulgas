@@ -1,0 +1,29 @@
+body{
+        display: flex;
+            align-items: center;
+            justify-content: center;
+            background:linear-gradient(315deg,  #002244,#3457D5);
+            height: 100vh;
+            margin: 0;
+        }
+        .custom-container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .custom-row{
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: white;
+            padding: 1%;
+        }
+        .forgot-password-link {
+            float: right;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .error-message{
+            color: red;
+            margin:0;
+            padding:0;
+        }

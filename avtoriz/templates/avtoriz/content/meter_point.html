@@ -1,0 +1,35 @@
+{% extends "avtoriz/content/base.html" %}
+{% block title %}Точка учета{% endblock title %}
+
+{% block content %}
+<div id="content-meter">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <div style="text-align:left !important;">
+                        <button class="btn btn-secondary btn-sm" onclick="back_main();">Вернуться назад</button>
+                        <span id="infoObject"></span>
+                    </div>
+
+                </div>
+                <div class="card-body" id="body-object">
+                    <table id="pointTable" class="table table-hover">
+                        <thead id="pointTabTH" class="text-white" style="background:linear-gradient(0deg, #002244,#3457D5);">
+                        <tr>
+                            <th>Заводской номер</th>
+                            <th>Модель</th>
+                            <th>Дата демонтажа</th>
+                            <th>Местонахождение</th>
+                            <th>Дата подключения</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="pointTabBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

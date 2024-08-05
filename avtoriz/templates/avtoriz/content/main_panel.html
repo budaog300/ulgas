@@ -1,0 +1,90 @@
+{% extends "avtoriz/content/base.html" %}
+{% load static %}
+{% block title %}Главная{% endblock title %}
+
+
+{% block content %}
+<div id="content-main">
+    <div class="row">
+        {% for partner in partners %}
+        {% with desired_agreement_id=request.session.desired_agreement_id %}
+        {% for agreement in agreements %}
+        {% if agreement.id == desired_agreement_id|add:0 and agreement.partner_id.id == partner.id %}
+
+        <div class="col-md-7">
+            <div class="card mb-3">
+                <div class="card-users card-body">
+                    <h4 class="card-title text-center">{{ partner.name }}</h4>
+                    <p class="card-text m-0 text-center"><b>Договор № {{ agreement.number_agreement }}</b></p>
+                    {% if agreement.type_agreement %}
+                    <p class="card-text m-0">{{agreement.type_agreement}}</p>
+                    {% else %}
+                    <p class="card-text m-0">Договор энергоснабжения</p>
+                    {% endif %}
+                    {% if partner.legal_address %}
+                    <p class="card-text">Юридический адрес: {{ partner.legal_address }}</p>
+                    {% else %}
+                    <p class="card-text">Юридический адрес отсутствует </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card-pay card text-center mb-3">
+                <div class="card-body">
+                    <h4 class="card-title">Баланс: 5000.00 руб.</h4>
+                    <p class="card-text ">К оплате: 4000.00 руб.</p>
+                    <a href="#" class="btn btn-primary btn-sm">Оплатить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-body">
+                    <table id="objectTable" class="table table-hover">
+                        <thead class="text-white" style="background:linear-gradient(0deg, #002244,#3457D5);">
+                        <tr>
+                            <th>Краткое наименование</th>
+                            <th>Адрес</th>
+                            <th style="display:none;">Статус</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for objectUser in objectpoint %}
+                        {% if objectUser.agreement_id.id == desired_agreement_id|add:0 %}
+                        <tr>
+                            <td class="column2">{{ objectUser.object_type }}</td>
+                            <td class="column3">{{ objectUser.address }}</td>
+                            {% if objectUser.is_active == '1' %}
+                            <td style="color: green; text-align: center; display:none;">true</td>
+                            {% else %}
+                            <td style="color: red; text-align: center; display:none;">false</td>
+                            {% endif %}
+                            <td width="10%">
+                                <button class="detailsButton btn btn-secondary btn-sm" id="detailsButton">></button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endwith %}
+{% endfor %}
+<!-- Скрытая форма для отправки данных -->
+<form id="hiddenForm" style="display:none;">
+    <input type="hidden" id="columnValue1" name="columnValue1" value="">
+    <input type="hidden" id="columnValue2" name="columnValue2" value="">
+    <input type="hidden" id="columnValue3" name="columnValue3" value="">
+</form>
+{% endblock content %}
+

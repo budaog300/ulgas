@@ -1,0 +1,21 @@
+{% extends "avtoriz/content/base.html" %}
+{% block title %}Документы{% endblock title %}
+
+{% block content %}
+<div id="content-document">
+<div class="container">
+        <h1 class="mb-4">Хранилище документов</h1>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="path_to_document/document1.pdf" target="_blank">Название документа 1</a>
+                <span class="date">Дата загрузки: 01.03.2024</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="path_to_document/document2.docx" target="_blank">Название документа 2</a>
+                <span class="date">Дата загрузки: 15.02.2024</span>
+            </li>
+            <!-- Добавьте другие документы по аналогии -->
+        </ul>
+    </div>
+</div>
+{% endblock content %}

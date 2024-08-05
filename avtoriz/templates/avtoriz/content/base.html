@@ -1,0 +1,293 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'avtoriz/css/jquery.dataTables.min.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="shortcut icon" href="{% static 'avtoriz/img/logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'avtoriz/css/index.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="УльГЭС, МУП Ульяновская городская электросеть">
+    <meta name="author" content="УльГЭС">
+    <title id="title-page">{% block title %}Домашняя страница{% endblock title %}</title>
+</head>
+<body>
+<div class="d-flex" style="height: 100vh;">
+    <div id="main">
+      <button class="openbtn" id="openbutton" onclick="toggleNav()">&#9776;</button>
+    </div>
+   <!-- <div class="left-bar">
+    <button type="button" id="sidebarCollapse" class="btn btn-outline-primary">
+        <span class="text"><i class="bi bi-arrow-left-right"></i></span>
+    </button></div>-->
+    <!-- SIDEBAR -->
+    <div class="w-25" id="sidebar" style="height: 100vh !important;">
+       <!-- <a href="javascript:void(0)" class="closebtn" id="closebutton" onclick="closeNav()">&times;</a>-->
+        <div class="card logo-text">
+            <a href="{% url 'home' %}"><img src="{% static 'avtoriz/img/logo.svg'%}" class="card-img-top" alt="УльГЭС"
+                                            id="logo"></a>
+            <div class="card-body">
+                <p class="card-text text-white">Муниципальное унитарное предприятие "Ульяновская городская
+                    электросеть"</p>
+                <button type="button" class="add-contract btn" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                    ДОБАВИТЬ ДОГОВОР
+                </button>
+            </div>
+        </div>
+        <!-- Договора -->
+ <div class="content">
+        {% if partners %}
+        {% for partner in page_obj %}
+        {% for agreement in partner.agreement_set.all %}
+        {% if agreement.id in user_agreement_ids %}
+
+        <div class="parent-agreement card m-3" id="infoUser_{{ partner.id }}" data-partner_id="{{ partner.email }}">
+            <div class="agreement-block card-body p-0 cursor-pointer position-relative" id="agreement-block"
+                 data-agreement_id="{{ agreement.id }}"
+                 data-agreement_number="{{ agreement.number_agreement }}">
+                <button class="btn-exit btn-close" aria-label="close" style="float:right;"></button>
+                <h6>{{ partner.name }}</h6>
+                {% csrf_token %}
+                <h6>Договор №{{ agreement.number_agreement }}</h6>
+                {% if agreement.conclusion_date %}
+                <small>Дата заключения договора: {{ agreement.conclusion_date|slice:":10" }}</small>
+                {% else %}
+                <small>Дата заключения договора не найдена</small>
+                {%endif%}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% else %}
+        <h3>У Вас нет договоров.</h3>
+        {% endif %}
+</div>
+
+        {% if page_obj.has_other_pages %}
+        <nav class="list-pages">
+            {% if page_obj.has_previous %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+            </li>
+            {% endif %}
+            <ul class="pagNumbers">
+                {% for p in page_obj.paginator.page_range %}
+                {% if page_obj.number == p %}
+                <li class="page-num page-num-selected" style=" border: 5px solid black;">{{ p }}</li>
+                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                <li class="page-num">
+                    <a href="?page={{ p }}">{{ p }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% if page_obj.has_next %}
+            <li class="page-num">
+                <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+            </li>
+            {% endif %}
+        </nav>
+        {% endif %}
+
+
+      <!--  <div id="loader" class="loader"></div>-->
+       <!-- {% if partners %}
+        {% for partner in partners %}
+        {% for agreement in partner.agreement_set.all %}
+        {% if agreement.id in user_agreement_ids %}
+
+<div class="parent-agreement card m-3" id="infoUser_{{ partner.id }}" data-partner_id="{{ partner.email }}">
+    <div class="agreement-block card-body p-0 cursor-pointer position-relative" id="agreement-block"
+         data-agreement_id="{{ agreement.id }}"
+         data-agreement_number="{{ agreement.number_agreement }}">
+        <button class="btn-exit btn-close" aria-label="close" style="float:right;"></button> &lt;!&ndash; Новая кнопка удаления &ndash;&gt;
+        <h6>{{ partner.name }}</h6>
+        {% csrf_token %}
+        <h6>Договор №{{ agreement.number_agreement }}</h6>
+        {% if agreement.conclusion_date %}
+        <small>Дата заключения договора: {{ agreement.conclusion_date|slice:":10" }}</small>
+        {% else %}
+        <small>Дата заключения договора не найдена</small>
+        {%endif%}
+    </div>
+</div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        {% else %}
+        <h3>У Вас нет договоров.</h3>
+        {% endif %}-->
+
+    </div>
+
+    <!-- SIDEBAR -->
+
+    <!-- TOPPANEL -->
+    <div class="w-100" id="top-bg">
+        <nav class="navbar navbar-light px-3 btngroup-top" style="height: 10vh;display:none;" id="top-panel">
+          <!--  <button type="button" id="sidebarCollapse" class="btn btn-outline-primary">
+                <span class="text"><i class="bi bi-arrow-left-right"></i></span>
+            </button>-->
+            <button type="button" class="btn btn-outline-primary" id="main-button" aria-pressed="true">Главная
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="point-button" style="display: none;">Объект
+                учета
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="payment-button" aria-pressed="true">
+                Начисления
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="note-button" aria-pressed="true">
+                Уведомления <span class="badge bg-secondary">1</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="appeal-button" aria-pressed="true">
+                Обращения
+            </button>
+            <button type="button" class="btn btn-outline-primary" id="document-button" aria-pressed="true">
+                Документы
+            </button>
+            <div>
+            <small class="userInfo" id="userInfo"><i class="fa fa-user-circle" aria-hidden="true" style="padding: 5%;"></i>{{user.username}}</small>
+            <a href="{% url 'logout' %}">
+                <button type="button" class="btn btn-outline-dark btn-sm"><b>Выйти</b></button>
+            </a>
+            </div>
+
+        </nav>
+        <!-- TOPPANEL -->
+
+        <!-- MAIN_PANEL -->
+        <div class="container" style="height: 90vh;" id="main-panel-content">
+            {% block content %}
+            <div class="card-group-center">
+                <div class="card mb-5 mt-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Добро пожаловать,
+                            <b>{{user.username}}</b>
+                            <span><a href="{% url 'logout' %}">
+                            <button type="button" class="btn btn-dark btn-sm"><b>Выйти</b></button>
+                        </a></span></h5>
+                        <p class="card-text">Для начала работы предлагаем Вам ознакомиться с руководством для
+                            пользователей</p>
+                        <p class="card-text"><small class="text-muted">
+                            <button class="btn btn-primary">Инструкция</button>
+                        </small>
+                            <button type="button" class="btn btn-primary btn-sm" aria-pressed="false"
+                                    onclick="showLoader()">
+                                Обновить данные
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <h5 class="card-title">Политика обработки персональных данных</h5>
+                        <p class="card-text">Какой-то текст</p>
+                        <p class="card-text"><small class="text-muted">
+                            <a href="https://www.ulges.ru/politiki/politika_pdn.pdf">
+                                <button class="btn btn-primary">Обработка персональных данных</button>
+                            </a></small></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Политики предприятия</h5>
+                        <p class="card-text">Какой-то текст</p>
+                        <p class="card-text"><small class="text-muted">
+                            <a href="https://www.ulges.ru/politiki/politiki_predpr.htm">
+                                <button class="btn btn-primary">Политики предприятия</button>
+                            </a></small></p>
+                    </div>
+                </div>
+            </div>
+            {% endblock content %}
+
+        </div>
+        <!-- MAIN_PANEL -->
+    </div>
+</div>
+
+<!-- Добавить договор -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Добавить договор</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="contractForm" method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <select class="form-select" aria-label="Тип договора" id="entityType" name="entityType">
+                            <option value="individual">Физическое лицо</option>
+                            <option value="legal">Юридическое лицо</option>
+                        </select>
+                        <label>Тип договора</label>
+                    </div>
+                    <div class="form-floating mb-3" id="individualFields">
+                        <input class="form-control" type="text" placeholder="Номер договора" name="contract_number"/>
+                        <label>Номер договора</label>
+                    </div>
+                    <div class="form-floating mb-3" id="legalFields">
+                        <input class="form-control" type="date" placeholder="Дата заключения договора"
+                               name="contract_date"/>
+                        <label>Дата заключения договора</label>
+                    </div>
+                    <div class="form-floating mb-3" id="legalFieldsSecond">
+                        <input class="form-control" type="text" placeholder="ИНН" name="inn"/>
+                        <label>ИНН</label>
+                    </div>
+                    {% for field in form %}
+                    {% if field.is_hidden %}
+                    {{ field }}
+                    {% endif %}
+                    {% endfor %}
+                    <p class="error-message text-center" id="error-message"></p>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" id="rememberMe" type="checkbox" name="rememberMe" required/>
+                        <label class="form-check-label" for="rememberMe" style="margin:0;font-size:14px;"><small>Я
+                            принимаю условия <a href="#">Пользовательского соглашения</a> <br>и <a href="#">Политики
+                                конфиденциальности</a></small></label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Модальное окно -->
+<div class="modal fade" id="basicModal" tabindex="-1" aria-labelledby="basicModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="basicModalLabel">Вы действительно хотите удалить договор?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Да</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ---------------- -->
+<script src="{% static 'avtoriz/js/loader.js'%}"></script>
+<script src="{% static 'avtoriz/js/jquery-3.5.1.min.js'%}"></script>
+<script src="{% static 'avtoriz/js/jquery.dataTables.min.js'%}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="{% static 'avtoriz/js/form_visible.js' %}"></script>
+<script src="{% static 'avtoriz/js/base_script.js' %}"></script>
+<script src="{% static 'avtoriz/js/deposits_script.js'%}"></script>
+</body>
+</html>

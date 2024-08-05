@@ -1,0 +1,36 @@
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'avtoriz/css/form_authoriz.css' %}">
+</head>
+<div class="modal" id="myModal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation();">
+        <div class="closeModal" id="closeModal">
+            <button id="closedButton" onclick="closeModal()">Закрыть</button>
+        </div>
+        <p class="error" id="error"></p>
+        <form method="POST" id="contractForm">
+            {% csrf_token %}
+            <select id="entityType" name="entityType">
+                <option value="individual">Физическое лицо</option>
+                <option value="legal">Юридическое лицо</option>
+            </select>
+            <div id="individualFields">
+                <label for="{{ form.contract_number.id_for_label }}">{{ form.contract_number.label }}</label>
+                {{ form.contract_number }}
+            </div>
+            <div id="legalFields">
+                <label for="{{ form.contract_date.id_for_label }}">{{ form.contract_date.label }}</label>
+                {{form.contract_date}}
+                <label for="{{ form.inn.id_for_label }}">{{ form.inn.label }}</label>
+                {{form.inn}}
+            </div>
+            <button id="formAuthButton" type="submit">Отправить на проверку</button>
+        </form>
+        <small><br>После проверки введенных
+            Вами данных мы оповестим Вас</small>
+    </div>
+</div>
+<script src="{% static 'avtoriz/js/form_visible.js' %}"></script>
+{% endblock %}

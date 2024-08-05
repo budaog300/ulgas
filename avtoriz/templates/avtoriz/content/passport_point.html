@@ -1,0 +1,58 @@
+{% extends "avtoriz/content/base.html" %}
+{% load static %}
+{% block title %}Паспорт ТУ{% endblock title %}
+
+{% block content %}
+<div id="content-passport">
+        <button class="btn btn-secondary btn-sm" id="backPassport" onclick="backMeter();">Вернуться назад</button>
+    <nav>
+        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Прибор учета
+            </button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Дополнительное
+                оборудование
+            </button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+                    type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Устройства связи
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content d-flex justify-content-center align-items-center" id="nav-tabContent">
+        <div class="tab-pane fade show active mt-5" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'avtoriz/img/meter.svg' %}" class="img-fluid rounded-start" alt="Счетчик">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" id="modelHeader"></h5>
+                            <p class="card-text" id="bodytext"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade mt-5" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{% static 'avtoriz/img/transform.svg' %}" class="img-fluid rounded-start"
+                             alt="Счетчик">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" id="transformHeader"></h5>
+                            <p class="card-text" id="transformBodyText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">Пока ничего нет
+        </div>
+    </div>
+</div>
+{% endblock content %}

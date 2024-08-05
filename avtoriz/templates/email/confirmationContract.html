@@ -1,0 +1,38 @@
+{% load static %}
+
+<html>
+<body>
+<head>
+    <style>
+        body {
+        text-align: justify;
+        }
+        body h1{
+         color:blue;
+        }
+        a {
+            background-color: blue;
+            padding: 10px;
+            color: white;
+            font-weight: 800;
+            font-size: 1.6em;
+            text-decoration: none;
+            text-align:center;
+        }
+        a:hover{
+            background-color: black;
+            color:white;
+        }
+
+    </style>
+</head>
+<h1><b>Подтвердите данные для контракта</b>: {{contract_number}}.</h1>
+<p><b>ИНН</b> - {{inn}}</p>
+<p><b>IP-Адрес</b> - {{client_ip}}</p>
+<p><b>Информация о браузере</b> - {{user_agent}}</p>
+<p><b>Пользователь</b> - {{ userName }} ID - {{ userId }}</p>
+<p><b>Почта</b> - {{ userEmail }}</p><br>
+
+<a href='http://{{get_current_site}}/confirm/{{confirmation_code}}'>Подтвердить</a>
+</body>
+</html>

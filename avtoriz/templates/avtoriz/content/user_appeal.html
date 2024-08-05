@@ -1,0 +1,60 @@
+{% extends "avtoriz/content/base.html" %}
+{% block title %}Обращения{% endblock title %}
+
+{% block content %}
+<div id="content-appeal">
+    <nav>
+        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Создать обращение
+            </button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
+                    type="button" role="tab" aria-controls="nav-profile" onclick="historyMessage()" aria-selected="false">История обращений
+            </button>
+        </div>
+    </nav>
+    <div class="tab-content mt-5" id="nav-tabContent" style="width:100%;">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <form id="contact_us_form" style="margin-left:auto;margin-right:auto;">
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="email" placeholder="Email" id="email" required/>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" placeholder="Имя" id="name" required/>
+                    <label for="name">Имя</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="tel" placeholder="Номер телефона" id="phone_number" required/>
+                    <label for="phone_number">Номер телефона</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Сообщение" style="height: 8rem;" id="messageUser"
+                              required></textarea>
+                    <label for="messageUser">Сообщение</label>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg" id="submitButton" type="submit">Отправить</button>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" style="overflow-y: auto; max-height: 500px;">
+            <!-- История обращений будет добавлена с помощью JavaScript -->
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Обращение отправлено</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

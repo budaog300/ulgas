@@ -1,0 +1,36 @@
+{% extends "avtoriz/content/base.html" %}
+{% load static %}
+{% block title %}Показания{% endblock title %}
+
+{% block content %}
+<div id="content-indicate">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card text-center">
+                <div class="card-header">
+                    <div style="text-align:left !important;">
+                            <button class="btn btn-secondary btn-sm" onclick="backMeter();">Вернуться назад</button>
+                        <span id="infoIndicate">Показания</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert" id="indicateError"></div>
+                    <table id="dataTableInfo" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Заводской номер счетчика</th>
+                            <th>Дата снятия показаний</th>
+                            <th>Зона (день, ночь)</th>
+                            <th>Показания</th>
+                            <th>Объем квт*ч</th>
+                            <th>Тип показания</th>
+                        </tr>
+                        </thead>
+                        <tbody id="bodyMeter"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
